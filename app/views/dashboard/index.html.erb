@@ -1,0 +1,121 @@
+<!-- Barra azul -->
+<div style="background-color: #2e5d70; height: 40px;"></div>
+
+<!-- Encabezado con título, subtítulo y logo -->
+<div class="container-fluid px-4 py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h2 class="fw-bold text-primary">Dashboard de Flujo de Agua</h2>
+      <p class="text-muted">Visualización interactiva de las mediciones de sensores</p>
+    </div>
+
+    <!-- Logo -->
+    <div>
+      <%= image_tag "LunaWater-nobg.png", alt: "Luna Water", width: 200 %>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="row g-3 align-items-center mb-4">
+    <div class="col-auto">
+      <%= date_field_tag :start_date, Date.today, class: "form-control" %>
+    </div>
+    <div class="col-auto">
+      <%= date_field_tag :end_date, Date.today, class: "form-control" %>
+    </div>
+    <div class="col-auto">
+      <%= select_tag :sensor, options_for_select(["Todos los sensores", "Sensor A"]), class: "form-select" %>
+    </div>
+
+    <!-- Botones de acción más abajo -->
+    <div class="col-auto d-flex align-items-center gap-2" style="margin-top: 15px;">
+      <%= button_to "Actualizar", dashboard_index_path, method: :get, class: "btn btn-outline-primary" %>
+      <%= link_to "Exportar", "#", class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+
+  <!-- Resumen de métricas -->
+  <div class="row text-center mb-5">
+    <%# Volumen Total %>
+    <div class="col-md-3">
+      <div class="card border-primary shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <%= image_tag "waterdrop.png", width: 28, class: "me-3" %>
+            <div class="text-start">
+              <div class="fw-semibold fs-5">Volumen Total</div>
+              <div class="fs-5 text-primary fw-bold">
+                <%= number_with_precision(@volumen_total || 0.297, precision: 3) %> <small>m³</small>
+              </div>
+            </div>
+          </div>
+          <div class="progress" style="height: 6px;">
+            <div class="progress-bar bg-info" style="width: 75%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Flujo Promedio %>
+    <div class="col-md-3">
+      <div class="card border-info shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <%= image_tag "arrow.png", width: 28, class: "me-3" %>
+            <div class="text-start">
+              <div class="fw-semibold fs-5">Flujo Promedio</div>
+              <div class="fs-5 text-info fw-bold">
+                <%= number_with_precision(@flujo_promedio || 5.58, precision: 2) %> <small>L/min</small>
+              </div>
+            </div>
+          </div>
+          <div class="progress" style="height: 6px;">
+            <div class="progress-bar bg-primary" style="width: 60%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Duración Total %>
+    <div class="col-md-3">
+      <div class="card border-success shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <%= image_tag "clock.png", width: 28, class: "me-3" %>
+            <div class="text-start">
+              <div class="fw-semibold fs-5">Duración Total</div>
+              <div class="fs-5 text-success fw-bold">
+                <%= number_with_precision(@duracion_total || 60.0, precision: 2) %> <small>min</small>
+              </div>
+            </div>
+          </div>
+          <div class="progress" style="height: 6px;">
+            <div class="progress-bar bg-success" style="width: 50%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Total Garrafones %>
+    <div class="col-md-3">
+      <div class="card border-primary shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <%= image_tag "cyan.png", width: 28, class: "me-3" %>
+            <div class="text-start">
+              <div class="fw-semibold fs-5">Total Garrafones</div>
+              <div class="fs-5 text-primary fw-bold">
+                <%= number_with_precision(@total_garrafones || 15.62, precision: 2) %>
+              </div>
+            </div>
+          </div>
+          <div class="progress" style="height: 6px;">
+            <div class="progress-bar bg-primary" style="width: 85%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

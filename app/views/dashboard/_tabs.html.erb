@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <%= link_to "Flujo de Agua", dashboard_flujo_path, class: "nav-link #{'active' if current_page?(dashboard_flujo_path)}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Volumen", dashboard_volumen_path, class: "nav-link #{'active' if current_page?(dashboard_volumen_path)}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Distribución", dashboard_distribucion_path, class: "nav-link #{'active' if current_page?(dashboard_distribucion_path)}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Datos", dashboard_datos_path, class: "nav-link #{'active' if current_page?(dashboard_datos_path)}" %>
+  </li>
+</ul>

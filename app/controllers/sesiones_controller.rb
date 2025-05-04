@@ -1,4 +1,6 @@
 class SesionesController < ApplicationController
+
+  layout "login"
   def new
   end
 
@@ -7,7 +9,7 @@ class SesionesController < ApplicationController
 
     if usuario&.authenticate(params[:contrasena]) && usuario.rol == "admin"
       session[:usuario_id] = usuario.id
-      redirect_to mediciones_path, notice: "Inicio de sesión exitoso"
+      redirect_to root_path, notice: "Inicio de sesión exitoso"
     else
       flash.now[:alert] = "Correo o contraseña incorrectos"
       render :new, status: :unprocessable_entity

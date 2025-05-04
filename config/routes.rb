@@ -1,8 +1,24 @@
 Rails.application.routes.draw do
-  get 'login', to: 'sesiones#new'
-  post 'login', to: 'sesiones#create'
+  # Rutas para sesiones
+  get    'login',  to: 'sesiones#new'
+  post   'login',  to: 'sesiones#create'
   delete 'logout', to: 'sesiones#destroy'
 
+  # Rutas para dashboard
+  controller :dashboard do
+    get 'dashboard/index'
+    get 'dashboard/flujo',        as: :dashboard_flujo
+    get 'dashboard/volumen',      as: :dashboard_volumen
+    get 'dashboard/distribucion', as: :dashboard_distribucion
+    get 'dashboard/datos',        as: :dashboard_datos
+  end
+
+  get 'dashboard/exportar', to: 'dashboard#exportar', as: :exportar_dashboard
+
+
+  # Rutas para mediciones
   get 'mediciones', to: 'mediciones#index'
-  root to: 'sesiones#new'
+
+  # Ruta raíz
+  root to: 'dashboard#index'
 end

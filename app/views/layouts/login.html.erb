@@ -1,33 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= content_for(:title) || "Luna Water" %></title>
+  <title>Luna Water - Iniciar Sesión</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
-  <%= yield :head %>
-
-  <link rel="icon" href="/icon.png" type="image/png">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/icon.png">
-
+  <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css", rel: "stylesheet" %>
-  <%= stylesheet_link_tag "dashboard", "data-turbo-track": "reload" %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   <%= javascript_importmap_tags %>
 </head>
 
 <body>
-
-
-
 <%= yield %>
-
 <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" %>
 </body>
 </html>

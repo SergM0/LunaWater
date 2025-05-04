@@ -2,6 +2,13 @@
 class ApplicationController < ActionController::Base
   helper_method :usuario_actual
 
+  def requerir_login
+    unless session[:usuario_id]
+      flash[:alert] = "Debes iniciar sesión para acceder a esta sección"
+      redirect_to login_path
+    end
+  end
+
   def usuario_actual
     @usuario_actual ||= Usuario.find_by(id: session[:usuario_id])
   end
