@@ -4,17 +4,23 @@
 <!-- Encabezado con título, subtítulo y logo -->
 <div class="container-fluid px-4 py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <!-- Título y subtítulo -->
     <div>
       <h2 class="fw-bold text-primary">Dashboard de Flujo de Agua</h2>
       <p class="text-muted">Visualización interactiva de las mediciones de sensores</p>
     </div>
 
-    <!-- Logo -->
-    <div>
-      <%= image_tag "LunaWater-nobg.png", alt: "Luna Water", width: 200 %>
+    <!-- Logo con botón en línea vertical -->
+    <div class="d-flex flex-column align-items-end">
+      <div class="d-flex align-items-center gap-3">
+        <%= image_tag "LunaWater-nobg.png", alt: "Luna Water", width: 200 %>
+      </div>
     </div>
-  </div>
 
+
+
+  </div>
   <!-- Filtros -->
   <div class="row g-3 align-items-center mb-4">
     <div class="col-auto">
@@ -31,6 +37,7 @@
     <div class="col-auto d-flex align-items-center gap-2" style="margin-top: 15px;">
       <%= button_to "Actualizar", dashboard_index_path, method: :get, class: "btn btn-outline-primary" %>
       <%= link_to "Exportar", "#", class: "btn btn-outline-secondary" %>
+      <%= button_to "Cerrar sesión", logout_path, method: :delete, class: "btn btn-outline-danger", style: "margin-left: 587px;", data: { turbo: false } %>
     </div>
   </div>
 
