@@ -10,7 +10,7 @@ class SesionesController < ApplicationController
       redirect_to mediciones_path, notice: "Inicio de sesión exitoso"
     else
       flash.now[:alert] = "Correo o contraseña incorrectos"
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
