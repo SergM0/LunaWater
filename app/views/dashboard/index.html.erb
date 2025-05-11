@@ -124,5 +124,89 @@
     </div>
   </div>
 
+  <!-- Menú de pestañas para tablas -->
+  <div class="container-fluid mb-5">
+    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="flujo-tab" data-bs-toggle="tab" data-bs-target="#flujo" type="button" role="tab" aria-controls="flujo" aria-selected="true">Flujo de Agua</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="volumen-tab" data-bs-toggle="tab" data-bs-target="#volumen" type="button" role="tab" aria-controls="volumen" aria-selected="false">Volumen</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="distribucion-tab" data-bs-toggle="tab" data-bs-target="#distribucion" type="button" role="tab" aria-controls="distribucion" aria-selected="false">Distribución</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="datos-tab" data-bs-toggle="tab" data-bs-target="#datos" type="button" role="tab" aria-controls="datos" aria-selected="false">Datos</button>
+      </li>
+    </ul>
+
+    <!-- Contenido de las pestañas -->
+    <div class="tab-content border p-4" id="dashboardTabsContent">
+      <div class="tab-pane fade show active" id="flujo" role="tabpanel" aria-labelledby="flujo-tab">
+        <h5>Flujo de Agua</h5>
+        <p>Contenido para la pestaña de flujo de agua.</p>
+      </div>
+      <div class="tab-pane fade" id="volumen" role="tabpanel" aria-labelledby="volumen-tab">
+        <h5>Volumen</h5>
+        <p>Contenido para la pestaña de volumen.</p>
+      </div>
+      <div class="tab-pane fade" id="distribucion" role="tabpanel" aria-labelledby="distribucion-tab">
+        <h5>Distribución</h5>
+        <p>Contenido para la pestaña de distribución.</p>
+      </div>
+      <!-- Tabla de mediciones -->
+      <div class="tab-pane fade" id="datos" role="tabpanel" aria-labelledby="datos-tab">
+        <h5>Datos de Mediciones</h5>
+        <p>Tabla detallada de las mediciones de flujo de agua</p>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Sensor</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Duración (min)</th>
+            <th>Flujo (L/min)</th>
+            <th>Volumen (m³)</th>
+            <th>Garrafones</th>
+            <th>Estado</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @mediciones.present? %>
+            <% @mediciones.each do |medicion| %>
+              <tr>
+                <td><%= medicion.id %></td>
+                <td><%= medicion.sensor.nombre %></td>
+                <td><%= medicion.timestamp_inicio.strftime("%d/%m/%Y %H:%M") %></td>
+                <td><%= medicion.timestamp_fin.strftime("%d/%m/%Y %H:%M") %></td>
+                <td><%= medicion.duracion_min %></td>
+                <td><%= medicion.flujo_promedio %></td>
+                <td><%= medicion.volumen_m3 %></td>
+                <td><%= medicion.volumen_garrafones %></td>
+                <td>
+                  <% if medicion.flujo_promedio >= 5.0 %>
+                    <span class="badge bg-success">Óptimo</span>
+                  <% elsif medicion.flujo_promedio >= 2.0 %>
+                    <span class="badge bg-warning">Normal</span>
+                  <% else %>
+                    <span class="badge bg-danger">Crítico</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="9" class="text-center">No hay mediciones disponibles</td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
 
 </div>

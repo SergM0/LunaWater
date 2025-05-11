@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'dashboard/exportar', to: 'dashboard#exportar', as: :exportar_dashboard
 
 
+
   # Rutas para mediciones
   get 'mediciones', to: 'mediciones#index'
 

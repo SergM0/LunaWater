@@ -2,10 +2,13 @@ class DashboardController < ApplicationController
   before_action :requerir_login
 
   def index
-    @volumen_total = 0.297
-    @flujo_promedio = 5.58
-    @duracion_total = 60.0
-    @total_garrafones = 15.62
+    @volumen_total = Medicion.sum(:volumen_m3).to_f.round(3)
+    @flujo_promedio = Medicion.average(:flujo_promedio).to_f.round(2)
+    @duracion_total = Medicion.sum(:duracion_min).to_f.round(2)
+    @total_garrafones = Medicion.sum(:volumen_garrafones).to_f.round(2)
+
+    @mediciones = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(50)
+
   end
 
   def datos
@@ -25,9 +28,24 @@ class DashboardController < ApplicationController
   end
 
   def exportar
-    # Aquí iría la lógica para exportar a CSV, por ahora solo redirige o muestra algo simple
     respond_to do |format|
-      format.csv { send_data "ID,Sensor,Fecha\n1,Sensor A,04/05/2025", filename: "mediciones.csv" }
+      format.csv do
+        csv_data = Medicion.includes(:sensor).map do |medicion|
+          [
+            medicion.id,
+            medicion.sensor.nombre,
+            medicion.inicio.strftime("%d/%m/%Y %H:%M"),
+            medicion.fin.strftime("%d/%m/%Y %H:%M"),
+            medicion.duracion,
+            medicion.flujo,
+            medicion.volumen,
+            medicion.garrafones,
+            medicion.estado
+          ].join(",")
+        end.join("\n")
+
+        send_data csv_data, filename: "mediciones.csv"
+      end
       format.html { redirect_to dashboard_index_path, alert: "Formato no soportado" }
     end
   end
