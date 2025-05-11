@@ -152,9 +152,41 @@
         <p>Contenido para la pestaña de volumen.</p>
       </div>
       <div class="tab-pane fade" id="distribucion" role="tabpanel" aria-labelledby="distribucion-tab">
-        <h5>Distribución</h5>
-        <p>Contenido para la pestaña de distribución.</p>
+        <h5>Distribución de Volumen por Medición</h5>
+        <p>Distribución porcentual del volumen de agua por medición</p>
+
+        <div class="d-flex flex-column align-items-center">
+          <svg viewBox="0 0 36 36" width="300" height="300" style="overflow: visible;" id="volume-chart">
+            <% total = @mediciones_datos.sum { |m| m[:volumen_m3] } %>
+            <% offset = 0 %>
+            <% @mediciones_datos.each do |medicion| %>
+              <% porcentaje = (medicion[:volumen_m3] / total.to_f) * 100 %>
+              <circle
+                r="15.9"
+                cx="18"
+                cy="18"
+                stroke="<%= medicion[:color] %>"
+                stroke-width="3.2"
+                stroke-dasharray="<%= porcentaje %> <%= 100 - porcentaje %>"
+                stroke-dashoffset="<%= offset %>"
+                fill="transparent"
+                class="chart-segment"
+                data-label="<%= medicion[:nombre_sensor] %> (<%= medicion[:volumen_m3] %> m³)"
+                />
+              <% offset -= porcentaje %>
+            <% end %>
+
+            <!-- Texto central con el volumen total -->
+            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="0.3em" font-weight="bold" fill="#333">
+              <%= @volumen_total %> m³
+            </text>
+          </svg>
+
+          <!-- Tooltip -->
+          <div id="chart-tooltip" class="chart-tooltip"></div>
+        </div>
       </div>
+
       <!-- Tabla de mediciones -->
       <div class="tab-pane fade" id="datos" role="tabpanel" aria-labelledby="datos-tab">
         <h5>Datos de Mediciones</h5>

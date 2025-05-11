@@ -44,3 +44,57 @@ body {
 .navbar {
     background-color: #ffffff !important;
 }
+
+svg circle {
+    transition: stroke-dasharray 0.5s ease;
+    cursor: pointer;
+}
+svg circle:hover {
+    stroke-width: 4;
+}
+
+/* Estilo para las etiquetas de colores */
+.leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.leyenda-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 15px;
+}
+
+.leyenda-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.chart-tooltip {
+    position: fixed;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    font-size: 0.85em;
+    color: #333;
+    border: 1px solid #ddd;
+    z-index: 9999;
+    pointer-events: none;
+    display: none;
+    transition: opacity 0.2s;
+}
+
+.chart-tooltip::after {
+    content: "";
+    position: absolute;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #ffffff transparent;
+    top: -12px;
+    left: 20px;
+}

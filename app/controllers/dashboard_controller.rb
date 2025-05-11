@@ -9,6 +9,15 @@ class DashboardController < ApplicationController
 
     @mediciones = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(50)
 
+    # Datos para la gráfica de distribución
+    colores = ["#00C49F", "#0088FE", "#FFBB28", "#FF8042", "#A569BD", "#17A2B8", "#E74C3C", "#3498DB", "#1ABC9C", "#9B59B6"]
+    @mediciones_datos = @mediciones.map.with_index(1) do |medicion, index|
+      {
+        nombre_sensor: "Medición #{index}",
+        volumen_m3: medicion.volumen_m3.round(3),
+        color: colores[index - 1]
+      }
+    end
   end
 
   def datos
@@ -24,8 +33,18 @@ class DashboardController < ApplicationController
   end
 
   def distribucion
-    # lógica para distribución de consumo
+    @mediciones = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(10)
+
+    @volumen_total = @mediciones.sum(:volumen_m3).round(3)
+    @mediciones_datos = @mediciones.map.with_index(1) do |medicion, index|
+      {
+        nombre_sensor: "Medición #{index}",
+        volumen_m3: medicion.volumen_m3.round(3),
+        color: ["#00C49F", "#0088FE", "#FFBB28", "#FF8042", "#A569BD", "#17A2B8", "#E74C3C", "#3498DB", "#1ABC9C", "#9B59B6"][index - 1]
+      }
+    end
   end
+
 
   def exportar
     respond_to do |format|
