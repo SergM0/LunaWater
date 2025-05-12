@@ -638,6 +638,18 @@
               </RakeTaskImpl>
             </subtasks>
           </RakeTaskImpl>
+          <RakeTaskImpl id="vite">
+            <subtasks>
+              <RakeTaskImpl description="Bundle frontend entrypoints using ViteRuby" fullCommand="vite:build" id="build" />
+              <RakeTaskImpl description="Bundle entrypoints using Vite Ruby (SSR only if enabled)" fullCommand="vite:build_all" id="build_all" />
+              <RakeTaskImpl description="Bundle a Node.js app from the SSR entrypoint using ViteRuby" fullCommand="vite:build_ssr" id="build_ssr" />
+              <RakeTaskImpl description="Remove the build output directory for ViteRuby" fullCommand="vite:clobber" id="clobber" />
+              <RakeTaskImpl description="Provide information on ViteRuby's environment" fullCommand="vite:info" id="info" />
+              <RakeTaskImpl description="Ensure build dependencies like Vite are installed before bundling" fullCommand="vite:install_dependencies" id="install_dependencies" />
+              <RakeTaskImpl description="Verify if ViteRuby is properly installed in the app" fullCommand="vite:verify_install" id="verify_install" />
+              <RakeTaskImpl description="" fullCommand="vite:binstubs" id="binstubs" />
+            </subtasks>
+          </RakeTaskImpl>
           <RakeTaskImpl id="yarn">
             <subtasks>
               <RakeTaskImpl description="Install all JavaScript dependencies as specified via Yarn" fullCommand="yarn:install" id="install" />
