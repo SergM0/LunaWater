@@ -18,6 +18,15 @@ class DashboardController < ApplicationController
         color: colores[index - 1]
       }
     end
+
+    @volumen_datos = @mediciones.map do |medicion|
+      {
+        timestamp: medicion.timestamp_inicio.strftime("%H:%M"),
+        volumen_m3: medicion.volumen_m3.round(3),
+        garrafones: medicion.volumen_garrafones.round(2)
+      }
+    end
+
   end
 
   def datos
@@ -29,7 +38,15 @@ class DashboardController < ApplicationController
   end
 
   def volumen
-    # lógica para resumen de volumen
+    @mediciones = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(10)
+
+    @volumen_datos = @mediciones.map do |medicion|
+      {
+        timestamp: medicion.timestamp_inicio.strftime("%H:%M"),
+        volumen_m3: medicion.volumen_m3.round(3),
+        garrafones: medicion.volumen_garrafones.round(2)
+      }
+    end
   end
 
   def distribucion
