@@ -9,6 +9,16 @@ class DashboardController < ApplicationController
 
     @mediciones = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(50)
 
+    # Datos para el gráfico de flujo
+    @flujo_datos = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(10).map do |medicion|
+      {
+        timestamp: medicion.timestamp_inicio.strftime("%H:%M"),
+        flujo: medicion.flujo_promedio.round(2),
+        duracion: medicion.duracion_min.round(2)
+      }
+    end
+
+
     # Datos para la gráfica de distribución
     colores = ["#00C49F", "#0088FE", "#FFBB28", "#FF8042", "#A569BD", "#17A2B8", "#E74C3C", "#3498DB", "#1ABC9C", "#9B59B6"]
     @mediciones_datos = @mediciones.map.with_index(1) do |medicion, index|
@@ -33,9 +43,17 @@ class DashboardController < ApplicationController
     @mediciones = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(50)
   end
 
+  # app/controllers/dashboard_controller.rb
   def flujo
-    # lógica para gráficas de flujo
+    @flujo_datos = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(10).map do |medicion|
+      {
+        timestamp: medicion.timestamp_inicio.strftime("%H:%M"),
+        flujo: medicion.flujo_promedio.round(2),
+        duracion: medicion.duracion_min.round(2)
+      }
+    end
   end
+
 
   def volumen
     @mediciones = Medicion.includes(:sensor).order(timestamp_inicio: :desc).limit(10)
